@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  nodejs:
+    container_name: nodejs
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: npm run start:dev
+    links:
+      - mongo
+    # networks:
+    #   - poc-network
+
+  mongo:
+    container_name: poc-admin-db
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+      MONGO_INITDB_DATABASE: customer-app
+    ports: 
+      - 27017:27017
+    volumes:
+      - ./dbdata:/data/db
+      - ./mongo/:/docker-entrypoint-initdb.d/
+    # networks:
+    #   - poc-network
+
+# networks:
+#   poc-network:
+#     driver: bridge
