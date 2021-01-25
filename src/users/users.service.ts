@@ -8,4 +8,8 @@ export class UsersService {
     constructor(
         @InjectModel('User') private readonly userModel: Model<User>
     ) {}
+
+    async getUser(email): Promise<User> {
+        return await this.userModel.findOne({email});
+    }
 }
