@@ -7,6 +7,6 @@ export class AuthController {
 
     @Post('users/auth')
     async auth(@Request() req) {
-        return this.authService.validateUser(req.body.user.email, req.body.user.password);
+        return this.authService.login(req.body.user);
     }
 }
